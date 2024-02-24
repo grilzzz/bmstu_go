@@ -30,7 +30,8 @@ func decode(utf8 []byte) []rune {
 			ans = append(ans, rune(rune((utf8[i]-128-64-32))<<12+rune((utf8[i+1]-128))<<6+rune(utf8[i+2]-128)))
 			i += 3
 		} else if utf8[i]>>6 == 3 {
-			ans = append(ans, rune((utf8[i]-128-64)<<6+utf8[i+1]-128))
+			fmt.Println("2 bytes")
+			ans = append(ans, rune((utf8[i]-128-64))<<6+rune(utf8[i+1]-128))
 			i += 2
 		} else {
 			ans = append(ans, rune(utf8[i]))
@@ -42,8 +43,10 @@ func decode(utf8 []byte) []rune {
 
 func main() {
 	// s := "€"
-	s := "𐍈"
+	s := "К"
 	fmt.Println(([]rune)(s))
 	fmt.Println(decode(([]byte)(s)))
+	fmt.Println(([]byte)(s))
+	fmt.Println(encode(([]rune)(s)))
 	// decode()
 }

@@ -12,21 +12,23 @@ func add(a, b []int32, p int) []int32 {
 	}
 	i := 0
 	var c int32 = 0
+	var c1 int32 = 0
 	for i < len(a) {
-		ans = append(ans, c/int32(p))
+		ans = append(ans, c1)
 		c = a[i] + b[i]
-		ans[i] += c % int32(p)
+		c1 = (ans[i] + c) / int32(p)
+		ans[i] = (ans[i] + c) % int32(p)
 		i++
 	}
-	if c/int32(p) > 0 {
-		ans = append(ans, c/int32(p))
+	if c1 > 0 {
+		ans = append(ans, c1)
 	}
 	return ans
 }
 
 func main() {
 	a := []int32{5, 2}
-	b := []int32{6, 0, 5}
+	b := []int32{6, 7, 5}
 
 	fmt.Println(add(a, b, 10))
 }
