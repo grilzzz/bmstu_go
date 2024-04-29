@@ -4,9 +4,7 @@ import "fmt"
 
 func main() {
 	numQ, numIn, startQ, QInToQ, QInToOut := scanAutomat()
-	// printAutomat(numQ, numIn, startQ, QInToQ, QInToOut)
 	newNumQ, newStartQ, newQInToQ, newQInToOut := aufenkampHohn(numQ, numIn, startQ, QInToQ, QInToOut)
-	// printAutomat(newNumQ, numIn, newStartQ, newQInToQ, newQInToOut)
 	TimeToQ, newQ := numerate(newNumQ, numIn, newStartQ, newQInToQ)
 	printAutomatWithNumerate(newNumQ, numIn, newStartQ, newQInToQ, newQInToOut, TimeToQ, newQ)
 }
@@ -64,7 +62,6 @@ func split1(numQ, numIn int, QInToQ [][]int, QInToOut [][]string) (m int, pi []i
 	m = numQ
 	dsuQ := dsu{[]int{}, []int{}}
 	dsuQ.initDsu(numQ)
-	// fmt.Println(dsuQ)
 	for q1 := 0; q1 < numQ; q1++ {
 		for q2 := q1 + 1; q2 < numQ; q2++ {
 
@@ -89,7 +86,6 @@ func split1(numQ, numIn int, QInToQ [][]int, QInToOut [][]string) (m int, pi []i
 	for q := 0; q < numQ; q++ {
 		pi = append(pi, dsuQ.find(q))
 	}
-	// fmt.Println("END SPLIT1")
 	return m, pi
 }
 
@@ -164,7 +160,6 @@ func aufenkampHohn(numQ, numIn, startQ int, QInToQ [][]int, QInToOut [][]string)
 	}
 	newStartQ = QToClassInd[pi[startQ]]
 	newNumQ = m
-	// fmt.Println(m, len(classIndQ), len(classIndToQ), len(QToClassInd))
 	return newNumQ, newStartQ, newQInToQ, newQInToOut
 }
 
@@ -194,18 +189,6 @@ func numerate(numQ, numIn, startQ int, QInToQ [][]int) (map[int]int, map[int]int
 		}
 	}
 	return TimeToQ, newQ
-}
-
-func printAutomat(numQ, numIn, startQ int, QInToQ [][]int, QInToOut [][]string) {
-	asciiCodeOfA := 97
-	fmt.Println("digraph {")
-	fmt.Printf("\trankdir = LR\n")
-	for i := 0; i < numQ; i++ {
-		for j := 0; j < numIn; j++ {
-			fmt.Printf("\t%d -> %d [label = \"%c(%s)\"]\n", i, QInToQ[i][j], rune(asciiCodeOfA+j), QInToOut[i][j])
-		}
-	}
-	fmt.Println("}")
 }
 
 func printAutomatWithNumerate(numQ, numIn, startQ int, QInToQ [][]int, QInToOut [][]string, TimeToQ, newQ map[int]int) {
